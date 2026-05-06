@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar Sesión | RAINEI</title>
+
+  <link rel="stylesheet" href="../style/style.css">
+  <link rel="icon" href="../imagenes/Logo.jpg">
+
+  <link rel="stylesheet" href="../style/login.css">
+</head>
+
+<body class="login-body">
+
+  <div class="login-card">
+    <h1 class="login-titulo">RAINEI</h1>
+    <h2 class="login-subtitulo">Iniciar Sesión</h2>
+
+    <form id="formLogin">
+
+      <input type="text" id="username" class="login-input"
+             placeholder="Usuario" required>
+
+      <input type="password" id="password" class="login-input"
+             placeholder="Contraseña" required>
+
+      <button type="submit" class="login-btn">Ingresar</button>
+    </form>
+
+    <p id="loginError" class="login-error oculto">
+      Usuario o contraseña incorrectos.
+    </p>
+  </div>
+
+  <script src="../js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Producto</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <link rel="icon" href="../imagenes/Logo.jpg">
+
+  <script src="../js/productos.js" defer></script>
+  <script src="../js/logica.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header-transparente">
+    <div class="contenedor-header">
+      <div class="logo">RAINEI</div>
+
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="catalogo.html">CATALOGO</a></li>
+          <li><a href="#seccion-contacto" class="go-contacto">CONTACTO</a></li>
+        </ul>
+      </nav>
+
+      <div class="iconos-header">
+        <img src="../imagenes/search.png" alt="Buscar" class="icono" />
+
+        <div id="carritoIcono" class="carrito-container">
+          <img src="../imagenes/carrito.png" alt="Carrito" class="icono">
+          <span class="contador-carrito">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== PANEL DEL CARRITO ===== -->
+  <div id="panelCarrito" class="panel-carrito">
+    <div class="carrito-header">
+      <h3>Tu carrito</h3>
+      <button class="cerrar-carrito" id="btnCerrarCarrito">&times;</button>
+    </div>
+
+    <div class="carrito-items" id="listaCarrito">
+      <p>Tu carrito está vacío.</p>
+    </div>
+
+    <div class="carrito-footer">
+      <button class="btn-comprar">Finalizar compra</button>
+    </div>
+  </div>
+
+  <!-- ===== DETALLE DEL PRODUCTO ===== -->
+  <main class="detalle-contenedor" style="margin-top:140px;">
+    <div id="detalleProducto"></div>
+  </main>
+
+    <div class="carrusel-contenedor">
+      <button class="btn-prev" id="btnPrevRelacionados">&#10094;</button>
+      <div class="carrusel-lista" id="relacionados"></div>
+      <button class="btn-next" id="btnNextRelacionados">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- ===== WHATSAPP ===== -->
+  <a href="https://wa.me/573001234567" class="whatsapp" target="_blank">
+    <img src="../imagenes/ws.png" alt="WhatsApp" />
+  </a>
+
+  <!-- ===== CONTACTO / REDES ===== -->
+  <section class="contacto-redes" id="seccion-contacto">
+    <h2>Contacto</h2>
+    <p>¿Tienes preguntas o comentarios?</p>
+
+    <div class="redes-contenedor">
+      <a href="https://www.instagram.com/raineishop/" target="_blank">
+        <img src="../imagenes/ig.png" alt="Instagram RAINEI">
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 RAINEI. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+
+  <!-- Renderizar detalle del producto -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("productoDetalle"));
+
+      // Si no hay producto → regresar al catálogo
+      if (!data) {
+        window.location.href = "catalogo.html";
+        return;
+      }
+
+      document.getElementById("detalleProducto").innerHTML = `
+        <div class="detalle-producto">
+          <div class="detalle-imagen">
+            <img src="${data.imagen}" alt="${data.nombre}">
+          </div>
+
+          <div class="detalle-info">
+            <h1>${data.nombre}</h1>
+            <p>${data.descripcion || "Producto sin descripción"}</p>
+            <h2>$${data.precio}</h2>
+
+            <button class="btn-principal" onclick="agregarAlCarrito(${data.id})">
+              Agregar al carrito
+            </button>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+
+  <!-- Abrir / cerrar carrito -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const carritoIcono = document.getElementById("carritoIcono");
+      const panelCarrito = document.getElementById("panelCarrito");
+      const btnCerrarCarrito = document.getElementById("btnCerrarCarrito");
+
+      carritoIcono.addEventListener("click", () => {
+        panelCarrito.classList.add("abierto");
+      });
+
+      btnCerrarCarrito.addEventListener("click", () => {
+        panelCarrito.classList.remove("abierto");
+      });
+
+      renderCarrito();
+    });
+  </script>
+
+  <!-- Renderizar relacionados -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Asegurar que productos RAINEI ya están cargados
+      productos = await obtenerProductosDesdeAPI();
+      renderizarProductos();
+    });
+  </script>
+
+  <!-- Navegación de carrusel -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const relacionados = document.getElementById("relacionados");
+      const btnPrev = document.getElementById("btnPrevRelacionados");
+      const btnNext = document.getElementById("btnNextRelacionados");
+
+      let scrollAmount = 0;
+      const scrollStep = 300;
+
+      btnPrev.addEventListener("click", () => {
+        scrollAmount = Math.max(scrollAmount - scrollStep, 0);
+        relacionados.style.transform = `translateX(-${scrollAmount}px)`;
+      });
+
+      btnNext.addEventListener("click", () => {
+        const maxScroll = relacionados.scrollWidth - relacionados.clientWidth;
+        scrollAmount = Math.min(scrollAmount + scrollStep, maxScroll);
+        relacionados.style.transform = `translateX(-${scrollAmount}px)`;
+      });
+    });
+  </script>
+
+  <!-- Scroll suave -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const headerAltura = 120;
+
+      function scrollConOffset(elemento) {
+        const y = elemento.getBoundingClientRect().top + window.pageYOffset - headerAltura;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+
+      // Relacionados
+      document.querySelector(".go-relacionados").addEventListener("click", (e) => {
+        e.preventDefault();
+        scrollConOffset(document.getElementById("carrusel-relacionados"));
+      });
+
+      // Contacto
+      document.querySelector(".go-contacto").addEventListener("click", (e) => {
+        e.preventDefault();
+        scrollConOffset(document.getElementById("seccion-contacto"));
+      });
+    });
+  </script>
+
+</body>
+</html>

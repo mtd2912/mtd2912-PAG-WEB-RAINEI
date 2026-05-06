@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAINEI | Moda Femenina</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../style/style.css" />
+  <link rel="icon" href="../imagenes/Logo.jpg" />
+
+  <!-- Scripts -->
+  <script src="../js/logica.js" defer></script>
+  <script src="../js/productos.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ============================
+     PANTALLA GRACIAS POR COMPRA
+=============================== -->
+<div id="pantallaGracias" class="pantalla-gracias oculto">
+  <div class="contenedor-gracias">
+    <h1>¡Gracias por tu compra! 🛍️</h1>
+    <p>Tu pedido ha sido procesado exitosamente.</p>
+    <button id="cerrarGracias" class="btn-gracias">Cerrar</button>
+  </div>
+</div>
+
+
+  <!-- HEADER -->
+  <header class="header-transparente">
+    <div class="contenedor-header">
+      <div class="logo">RAINEI</div>
+
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="catalogo.html">CATALOGO</a></li>
+          <li><a href="#carrusel-colecciones" class="go-colecciones">COLECCIONES</a></li>
+          <li><a href="#carrusel-accesorios" class="go-accesorios">ACCESORIOS</a></li>
+          <li><a href="#" class="go-contacto">CONTACTO</a></li>
+        </ul>
+      </nav>
+
+      <!-- === CARRITO === -->
+      <div class="iconos-header">
+        <a href="login.html">  
+          <img src="../imagenes/login.png" class="icono" alt="Login">
+        </a>
+
+        <div id="carritoIcono" class="carrito-container">
+          <img src="../imagenes/carrito.png" alt="Carrito" class="icono">
+          <span class="contador-carrito">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== PANEL CARRITO ===== -->
+  <div id="panelCarrito" class="panel-carrito">
+    <div class="carrito-header">
+      <h3>Tu carrito</h3>
+      <button class="cerrar-carrito" id="btnCerrarCarrito">&times;</button>
+    </div>
+
+    <div class="carrito-items">
+      <p>Tu carrito está vacío.</p>
+    </div>
+
+    <div class="carrito-footer">
+      <button class="btn-comprar">Finalizar compra</button>
+    </div>
+  </div>
+
+  <!-- BANNERS -->
+  <section class="banner">
+    <img src="../imagenes/origenes.png" alt="Banner Colección RAINEI" />
+    <div class="texto-banner">
+      <h1>COLECCIÓN OTOÑO 2025</h1>
+      <a href="catalogo.html" class="btn-banner">VER COLECCIÓN</a>
+    </div>
+  </section>
+
+  <section class="banner">
+    <img src="../imagenes/textileria.png" alt="Banner Promocional" />
+    <div class="texto-banner">
+      <h1>NUEVA TEMPORADA</h1>
+      <a href="catalogo.html" class="btn-banner">DESCUBRIR</a>
+    </div>
+  </section>
+
+  <!-- CARRUSELES -->
+  <section class="carrusel" id="carrusel-colecciones">
+    <h2>NUESTRAS COLECCIONES</h2>
+    <div class="carrusel-contenedor">
+      <button class="btn-prev">&#10094;</button>
+      <div class="carrusel-lista" id="relacionados"></div>
+      <button class="btn-next">&#10095;</button>
+    </div>
+  </section>
+
+  <section class="carrusel" id="carrusel-accesorios">
+    <h2>ACCESORIOS Y RECOMENDADOS</h2>
+    <div class="carrusel-contenedor">
+      <button class="btn-prev">&#10094;</button>
+      <div class="carrusel-lista" id="recomendados"></div>
+      <button class="btn-next">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/573001234567" class="whatsapp" target="_blank">
+    <img src="../imagenes/ws.png" alt="WhatsApp" />
+  </a>
+
+  <!-- CONTACTO / REDES -->
+  <section class="contacto-redes" id="seccion-contacto">
+    <h2>Contacto</h2>
+    <p>¿Tienes preguntas o comentarios?</p>
+
+    <div class="redes-contenedor">
+      <a href="https://www.instagram.com/raineishop/" target="_blank">
+        <img src="../imagenes/ig.png" alt="Instagram RAINEI">
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 RAINEI. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- SCRIPTS ================================================= -->
+
+  <!-- abrir / cerrar carrito -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const carritoIcono = document.getElementById("carritoIcono");
+      const panelCarrito = document.getElementById("panelCarrito");
+      const btnCerrarCarrito = document.getElementById("btnCerrarCarrito");
+
+      carritoIcono.addEventListener("click", () => {
+        panelCarrito.classList.add("abierto");
+      });
+
+      btnCerrarCarrito.addEventListener("click", () => {
+        panelCarrito.classList.remove("abierto");
+      });
+    });
+  </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    renderCarrito();  // 👈 aquí
+});
+</script>
+
+
+  <!-- SCROLL -->
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const headerAltura = 120;
+
+    function scrollConOffset(elemento) {
+      const y = elemento.getBoundingClientRect().top + window.pageYOffset - headerAltura;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+
+    // COLECCIONES → primer carrusel
+    document.querySelector(".go-colecciones").addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollConOffset(document.getElementById("carrusel-colecciones"));
+    });
+
+    // ACCESORIOS → segundo carrusel
+    document.querySelector(".go-accesorios").addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollConOffset(document.getElementById("carrusel-accesorios"));
+    });
+
+    // CONTACTO → sección contacto
+    document.querySelector(".go-contacto").addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollConOffset(document.getElementById("seccion-contacto"));
+    });
+
+  });
+  </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btnComprar = document.querySelector(".btn-comprar");
+    const pantalla = document.getElementById("pantallaGracias");
+    const cerrarGracias = document.getElementById("cerrarGracias");
+
+    if (btnComprar) {
+        btnComprar.addEventListener("click", () => {
+            pantalla.classList.remove("oculto");
+            localStorage.removeItem("carrito");
+            actualizarContadorCarrito();
+            renderCarrito();
+        });
+    }
+
+    if (cerrarGracias) {
+        cerrarGracias.addEventListener("click", () => {
+            pantalla.classList.add("oculto");
+        });
+    }
+});
+</script>
+
+
+</body>
+</html>

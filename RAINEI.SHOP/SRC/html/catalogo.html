@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAINEI | Catálogo</title>
+
+  <!-- ESTILOS -->
+  <link rel="stylesheet" href="../style/style.css" />
+  <link rel="icon" href="../imagenes/Logo.jpg" />
+
+  <!-- ORDEN CORRECTO -->
+  <script src="../js/logica.js" defer></script>
+  <script src="../js/productos.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ============================
+      PANTALLA GRACIAS POR COMPRA
+  =============================== -->
+  <div id="pantallaGracias" class="pantalla-gracias oculto">
+    <div class="contenedor-gracias">
+      <h1>¡Gracias por tu compra! 🛍️</h1>
+      <p>Tu pedido ha sido procesado exitosamente.</p>
+      <button id="cerrarGracias" class="btn-gracias">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header-transparente">
+    <div class="contenedor-header">
+
+      <div class="logo">RAINEI</div>
+
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="#catalogo-pro" class="go-catalogo">CATÁLOGO</a></li>
+          <li><a href="index.html#carrusel-accesorios" class="go-accesorios">ACCESORIOS</a></li>
+          <li><a href="#seccion-contacto" class="go-contacto">CONTACTO</a></li>
+        </ul>
+      </nav>
+
+      <div class="iconos-header">
+        <img src="../imagenes/search.png" class="icono" />
+
+        <div id="carritoIcono" class="carrito-container">
+          <img src="../imagenes/carrito.png" class="icono" />
+          <span class="contador-carrito">0</span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================
+        PANEL DEL CARRITO
+  ============================ -->
+  <div id="panelCarrito" class="panel-carrito">
+    <div class="carrito-header">
+      <h3>Tu carrito</h3>
+      <button id="btnCerrarCarrito" class="cerrar-carrito">×</button>
+    </div>
+
+    <div class="carrito-items">
+      <p>Tu carrito está vacío.</p>
+    </div>
+
+    <div class="carrito-footer">
+      <p>Subtotal: <span id="subtotalCarrito">$0</span></p>
+      <button class="btn-comprar">Finalizar compra</button>
+    </div>
+  </div>
+
+  <!-- BANNER -->
+  <section class="banner">
+    <img src="../imagenes/natasha.png" />
+    <div class="texto-banner">
+      <h1>NUESTRO CATÁLOGO COMPLETO</h1>
+      <p>Descubre nuestras colecciones</p>
+    </div>
+  </section>
+
+  <!-- ============================
+            CATÁLOGO
+  ============================ -->
+  <main id="catalogo-pro" class="catalogo-pro">
+
+    <section class="catalogo-grid" id="grid-1"></section>
+    <section class="catalogo-grid" id="grid-2"></section>
+    <section class="catalogo-grid" id="grid-3"></section>
+
+  </main>
+
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/573001234567" target="_blank" class="whatsapp">
+    <img src="../imagenes/ws.png" />
+  </a>
+
+  <!-- CONTACTO -->
+  <section id="seccion-contacto" class="contacto-redes">
+    <h2>Contacto</h2>
+    <p>¿Tienes preguntas?</p>
+
+    <div class="redes-contenedor">
+      <a href="https://www.instagram.com/raineishop/" target="_blank">
+        <img src="../imagenes/ig.png">
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 RAINEI. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- SCRIPTS DEL CARRITO -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const carritoIcono = document.getElementById("carritoIcono");
+      const panelCarrito = document.getElementById("panelCarrito");
+      const btnCerrarCarrito = document.getElementById("btnCerrarCarrito");
+
+      carritoIcono.addEventListener("click", () =>
+        panelCarrito.classList.add("abierto")
+      );
+
+      btnCerrarCarrito.addEventListener("click", () =>
+        panelCarrito.classList.remove("abierto")
+      );
+
+      renderCarrito();
+    });
+  </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btnComprar = document.querySelector(".btn-comprar");
+    const pantalla = document.getElementById("pantallaGracias");
+    const cerrarGracias = document.getElementById("cerrarGracias");
+
+    if (btnComprar) {
+        btnComprar.addEventListener("click", () => {
+            pantalla.classList.remove("oculto");
+            localStorage.removeItem("carrito");
+            actualizarContadorCarrito();
+            renderCarrito();
+        });
+    }
+
+    if (cerrarGracias) {
+        cerrarGracias.addEventListener("click", () => {
+            pantalla.classList.add("oculto");
+        });
+    }
+});
+</script>
+
+
+</body>
+</html>
